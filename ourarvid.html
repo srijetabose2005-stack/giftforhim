@@ -48,7 +48,7 @@
 
     <!-- 
         1. THE SCENE SETUP 
-        *** CORRECTED: Using your exact URL and the targets.mind file ***
+        *** Target URL confirmed as correct from previous steps ***
     -->
     <a-scene 
         mindar-image="imageTargetSrc: https://srijetabose2005-stack.github.io/giftforhim/targets.mind;"
@@ -62,8 +62,7 @@
         <!-- 2. ASSETS: Pre-load the video file -->
         <a-assets>
             <!-- 
-                *** CORRECTED: Using your exact hosted video file name ***
-                The 'autoplay' attribute is here, but the JS handles the play/unmute attempt.
+                *** Video URL confirmed as correct from previous steps ***
             -->
             <video id="gift-video" 
                    autoplay loop playsinline webkit-playsinline 
@@ -75,12 +74,13 @@
         <a-entity mindar-image-target="targetIndex: 0">
 
             <!-- 4. THE CONTENT: A video plane that is attached to the anchor -->
+            <!-- *** SCALING ADJUSTMENT HERE *** -->
             <a-video 
                 src="#gift-video" 
-                width="1" height="0.56" 
+                width="2.1" height="1.2"  
                 position="0 0 0" 
                 rotation="0 0 0"
-                scale="1 1 1"
+                scale="2 2 1"
             ></a-video>
 
         </a-entity>
