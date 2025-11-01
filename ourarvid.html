@@ -4,51 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6 Months Anniversary AR Gift</title>
-    <!-- Load A-Frame (for 3D scene) and MindAR A-Frame library (for tracking) -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; font-family: sans-serif; }
+        body { margin: 0; overflow: hidden; font-family: 'Patrick Hand', cursive; }
         
         /* Fixed instruction banner at the top */
         #ar-instructions {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.95); color: #1F2937;
-            padding: 12px 24px; border-radius: 10px; text-align: center;
-            z-index: 100; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            font-weight: 600; font-size: 1rem;
+            /* Aesthetic Styling */
+            background-color: #FFC0CB; /* Soft Pink */
+            color: #4B0082; /* Deep Lavender/Violet */
+            padding: 15px 30px; 
+            border-radius: 25px; /* Super rounded corners */
+            text-align: center;
+            z-index: 100; 
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4); /* Pink Shadow */
+            font-weight: 900; 
+            font-size: 1.2rem;
+            line-height: 1.5;
             transition: opacity 0.3s ease-in-out;
         }
 
         /* Full-screen prompt for sound (required by mobile browsers) */
         #play-prompt {
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.85); color: white;
-            display: none; /* Hidden by default */
-            justify-content: center; align-items: center;
-            flex-direction: column; z-index: 101;
-            font-size: 1.5rem; font-weight: bold;
+            /* Aesthetic Styling */
+            background-color: rgba(255, 192, 203, 0.9); /* Light Pink Overlay */
+            color: #4B0082;
+            display: none; 
+            justify-content: center; 
+            align-items: center;
+            flex-direction: column; 
+            z-index: 101;
+            font-size: 2.2rem; /* Larger for impact */
+            font-weight: bold;
             cursor: pointer;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
         }
         #play-prompt.visible { display: flex; }
+        
+        /* Smaller supporting text */
+        #play-prompt p:nth-child(2) {
+            font-size: 1.5rem; 
+            font-weight: normal; 
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div id="ar-instructions">
-        **Instructions:** Open this on your phone, and point the camera at the photo frame!
+        💖 **MY MR. SERIOUS!** Point your camera at the photo frame! 💖
     </div>
     
-    <!-- This overlay handles the required user interaction to enable sound -->
     <div id="play-prompt">
-        <p>Tap anywhere to enable AR camera, sound, and video.</p>
-        <p style="font-size: 1rem; font-weight: normal; margin-top: 10px;">(Please ensure your phone is not muted!)</p>
+        <p>Tap to start the MAGIC! ✨</p>
+        <p style="font-size: 1.5rem; font-weight: normal; margin-top: 20px;">(Please ensure your phone is not muted!)</p>
     </div>
 
-    <!-- 
-        1. THE SCENE SETUP 
-    -->
     <a-scene 
         mindar-image="imageTargetSrc: https://srijetabose2005-stack.github.io/giftforhim/targets.mind;"
         vr-mode-ui="enabled: false" 
@@ -58,7 +76,6 @@
     >
         <a-camera active="false" position="0 0 0"></a-camera>
 
-        <!-- 2. ASSETS: Pre-load the video file -->
         <a-assets>
             <video id="gift-video" 
                    autoplay loop playsinline webkit-playsinline 
@@ -67,11 +84,8 @@
             </video>
         </a-assets>
 
-        <!-- 3. THE AR ANCHOR: This entity follows the detected image target -->
         <a-entity mindar-image-target="targetIndex: 0">
 
-            <!-- 4. THE CONTENT: Use a plane textured with the video for better performance -->
-            <!-- PERFECT VERTICAL CENTERING FIX: Y-position adjusted to -0.1 to shift it down perfectly -->
             <a-plane 
                 src="#gift-video" 
                 width="1.2" height="1.8"  
@@ -130,10 +144,4 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
+```eof
