@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 Months Anniversary AR Gift</title>
+    <!-- Load A-Frame (for 3D scene) and MindAR A-Frame library (for tracking) -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: sans-serif; }
+        
+        /* Fixed instruction banner at the top */
+        #ar-instructions {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.95); color: #1F2937;
+            padding: 12px 24px; border-radius: 10px; text-align: center;
+            z-index: 100; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-weight: 600; font-size: 1rem;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Full-screen prompt for sound (required by mobile browsers) */
+        #play-prompt {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85); color: white;
+            display: none; /* Hidden by default */
+            justify-content: center; align-items: center;
+            flex-direction: column; z-index: 101;
+            font-size: 1.5rem; font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        #play-prompt.visible { display: flex; }
+    </style>
+</head>
+<body>
+
+    <div id="ar-instructions">
+        **Instructions:** Open this on your phone, and point the camera at the photo frame!
+    </div>
+    
+    <!-- This overlay handles the required user interaction to enable sound -->
+    <div id="play-prompt">
+        <p>Tap anywhere to enable AR camera, sound, and video.</p>
+        <p style="font-size: 1rem; font-weight: normal; margin-top: 10px;">(Please ensure your phone is not muted!)</p>
+    </div>
+
+    <!-- 
+        1. THE SCENE SETUP 
+        *** CORRECTED: Using your exact URL and the targets.mind file ***
+    -->
+    <a-scene 
+        mindar-image="imageTargetSrc: https://srijetabose2005-stack.github.io/giftforhim/targets.mind;"
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false"
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights: true"
+    >
+        <a-camera active="false" position="0 0 0"></a-camera>
+
+        <!-- 2. ASSETS: Pre-load the video file -->
+        <a-assets>
+            <!-- 
+                *** CORRECTED: Using your exact hosted video file name ***
+                The 'autoplay' attribute is here, but the JS handles the play/unmute attempt.
+            -->
+            <video id="gift-video" 
+                   autoplay loop playsinline webkit-playsinline 
+                   src="https://srijetabose2005-stack.github.io/giftforhim/Untitled%20video%20-%20Made%20with%20Clipchamp%20(2).mp4">
+            </video>
+        </a-assets>
+
+        <!-- 3. THE AR ANCHOR: This entity follows the detected image target -->
+        <a-entity mindar-image-target="targetIndex: 0">
+
+            <!-- 4. THE CONTENT: A video plane that is attached to the anchor -->
+            <a-video 
+                src="#gift-video" 
+                width="1" height="0.56" 
+                position="0 0 0" 
+                rotation="0 0 0"
+                scale="1 1 1"
+            ></a-video>
+
+        </a-entity>
+    </a-scene>
+
+    <script>
+        // JavaScript for controlling video playback and user interaction for sound
+        window.onload = function() {
+            const video = document.getElementById('gift-video');
+            const scene = document.querySelector('a-scene');
+            const playPrompt = document.getElementById('play-prompt');
+            
+            // Start by showing the play prompt, forcing a tap to enable AR/sound
+            playPrompt.classList.add('visible');
+
+            function attemptPlay() {
+                // Only try to play if the video is paused (which it will be initially)
+                if (video.paused) {
+                    const playPromise = video.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            // Success: video is playing, hide the prompt
+                            playPrompt.classList.remove('visible');
+                        }).catch(error => {
+                            // Failure: Browser blocked play (usually due to sound security)
+                            // The prompt remains visible, waiting for another tap
+                            console.error("Video play attempt failed:", error);
+                        });
+                    }
+                } else {
+                    playPrompt.classList.remove('visible'); // Already playing
+                }
+            }
+
+            // 1. When the user taps the screen (through the overlay), attempt to play
+            playPrompt.addEventListener('click', attemptPlay);
+            
+            // 2. Play video when target image is found
+            scene.addEventListener('targetFound', attemptPlay);
+
+            // 3. Pause video when target image is lost
+            scene.addEventListener('targetLost', () => {
+                if (!video.paused) {
+                    video.pause();
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>
