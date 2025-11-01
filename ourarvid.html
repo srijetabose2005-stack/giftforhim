@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6 Months Anniversary AR Gift</title>
-    <!-- Load A-Frame (for 3D scene) and MindAR A-Frame library (for tracking) -->
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Load A-Frame (for 3D scene) and MindAR A-Frame library (for tracking) --><script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <style>
         body { margin: 0; overflow: hidden; font-family: sans-serif; }
@@ -40,8 +39,7 @@
         **Instructions:** Open this on your phone, and point the camera at the photo frame!
     </div>
     
-    <!-- This overlay handles the required user interaction to enable sound -->
-    <div id="play-prompt">
+    <!-- This overlay handles the required user interaction to enable sound --><div id="play-prompt">
         <p>Tap anywhere to enable AR camera, sound, and video.</p>
         <p style="font-size: 1rem; font-weight: normal; margin-top: 10px;">(Please ensure your phone is not muted!)</p>
     </div>
@@ -49,8 +47,7 @@
     <!-- 
         1. THE SCENE SETUP 
         *** Target URL confirmed as correct from previous steps ***
-    -->
-    <a-scene 
+    --><a-scene 
         mindar-image="imageTargetSrc: https://srijetabose2005-stack.github.io/giftforhim/targets.mind;"
         vr-mode-ui="enabled: false" 
         device-orientation-permission-ui="enabled: false"
@@ -59,31 +56,25 @@
     >
         <a-camera active="false" position="0 0 0"></a-camera>
 
-        <!-- 2. ASSETS: Pre-load the video file -->
-        <a-assets>
+        <!-- 2. ASSETS: Pre-load the video file --><a-assets>
             <!-- 
                 *** Video URL confirmed as correct from previous steps ***
-            -->
-            <video id="gift-video" 
+            --><video id="gift-video" 
                    autoplay loop playsinline webkit-playsinline 
                    src="https://srijetabose2005-stack.github.io/giftforhim/Untitled%20video%20-%20Made%20with%20Clipchamp%20(2).mp4">
             </video>
         </a-assets>
 
-        <!-- 3. THE AR ANCHOR: This entity follows the detected image target -->
-        <a-entity mindar-image-target="targetIndex: 0">
+        <!-- 3. THE AR ANCHOR: This entity follows the detected image target --><a-entity mindar-image-target="targetIndex: 0">
 
-            <!-- 4. THE CONTENT: A video plane that is attached to the anchor -->
-            <!-- 
-                *** FINAL PORTRAIT COVER ADJUSTMENT ***
-                - Height is significantly increased to match the tall physical photo.
-                - Position is centered (0 0 0.005) to ensure it replaces the photo.
-            -->
-            <a-video 
+            <!-- 4. THE CONTENT: A video plane that is attached to the anchor --><!-- 
+                *** FINAL PORTRAIT COVER AND CENTERING ADJUSTMENT ***
+                - width/height ensure it covers the photo.
+                - position="0.05 0 0.005" - X-axis adjusted slightly right to center.
+            --><a-video 
                 src="#gift-video" 
                 width="1.2" height="2.0"  
-                position="0 0 0.005"   
-                rotation="0 0 0"
+                position="0.05 0 0.005"   <!-- Adjusted X-position to center -->rotation="0 0 0"
                 scale="1.8 1.8 1"      
             ></a-video>
 
@@ -137,5 +128,6 @@
 
 </body>
 </html>
+
 
 
